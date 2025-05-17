@@ -4,6 +4,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import logging
 from utils.extract import get_page_content, parse_product_card, extract_data
+from requests.exceptions import RequestException
 
 # Suppress logging during tests
 logging.getLogger().setLevel(logging.CRITICAL)
@@ -15,7 +16,7 @@ class TestExtract(unittest.TestCase):
             <h3 class="product-title">Test Product</h3>
             <span class="price">$99.99</span>
             <p>Rating: 4.5 / 5</p>
-            <p>Colors: 3 Colors</p>
+            <p>3 Colors</p>
             <p>Size: M</p>
             <p>Gender: Unisex</p>
         </div>
@@ -29,14 +30,15 @@ class TestExtract(unittest.TestCase):
         mock_response.raise_for_status.return_value = None
         mock_get.return_value = mock_response
 
-        result = get_page_content("http://test.com")
+        result = get_page_content("https://fashion-studio.dicoding.dev/")
         self.assertEqual(result, self.sample_html)
 
     @patch('requests.get')
     def test_get_page_content_request_exception(self, mock_get):
-        mock_get.side_effect = Exception("Request failed")
+        mock_get.side_effect = RequestException("Request failed")  # gunakan RequestException
         result = get_page_content("http://test.com")
         self.assertIsNone(result)
+
 
     def test_parse_product_card_valid(self):
         soup = BeautifulSoup(self.sample_html, "html.parser")

@@ -53,9 +53,6 @@ def save_to_csv(df: pd.DataFrame, output_path: str, filename: str = "products.cs
         # Validate input DataFrame
         if df is None or df.empty:
             raise ValueError("DataFrame is empty or None")
-            
-        # Create directory if it doesn't exist
-        os.makedirs(output_path, exist_ok=True)
         
         # Construct full file path
         file_path = os.path.join(output_path, filename)
@@ -74,6 +71,7 @@ def save_to_csv(df: pd.DataFrame, output_path: str, filename: str = "products.cs
     except Exception as e:
         logger.error(f"Failed to save data to CSV: {str(e)}")
         raise LoadError(f"CSV export failed: {str(e)}")
+
 
 def save_to_google_sheets(
     df: pd.DataFrame, 

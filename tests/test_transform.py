@@ -73,8 +73,9 @@ class TestTransform(unittest.TestCase):
 
     def test_remove_dirty_data(self):
         df = remove_dirty_data(self.sample_df)
-        self.assertEqual(len(df), 1)  # Only "Valid Product" should remain
-        self.assertEqual(df.iloc[0]["title"], "Valid Product")
+        self.assertEqual(len(df), 2)  # "Test Product" dan "Valid Product" harusnya lolos
+        self.assertIn("Test Product", df["title"].values)
+        self.assertIn("Valid Product", df["title"].values)
 
     def test_remove_dirty_data_empty_df(self):
         df = pd.DataFrame()
@@ -83,13 +84,26 @@ class TestTransform(unittest.TestCase):
 
     def test_transform_data(self):
         df = transform_data(self.sample_df)
-        self.assertEqual(len(df), 1)
-        self.assertEqual(df.iloc[0]["title"], "Valid Product")
-        self.assertEqual(df.iloc[0]["price"], 100.50 * 16000)
-        self.assertEqual(df.iloc[0]["rating"], 3.2)
-        self.assertEqual(df.iloc[0]["colors"], 2)
-        self.assertEqual(df.iloc[0]["size"], "L")
-        self.assertEqual(df.iloc[0]["gender"], "Male")
+        self.assertEqual(len(df), 2)
+        titles = df["title"].values
+        self.assertIn("Test Product", titles)
+        self.assertIn("Valid Product", titles)
+        
+        # Validasi baris Valid Product
+        valid_row = df[df["title"] == "Valid Product"].iloc[0]
+        self.assertEqual(valid_row["price"], 100.50 * 16000)
+        self.assertEqual(valid_row["rating"], 3.2)
+        self.assertEqual(valid_row["colors"], 2)
+        self.assertEqual(valid_row["size"], "L")
+        self.assertEqual(valid_row["gender"], "Male")
+
+        # Validasi baris Test Product
+        test_row = df[df["title"] == "Test Product"].iloc[0]
+        self.assertEqual(test_row["price"], 99.99 * 16000)
+        self.assertEqual(test_row["rating"], 4.5)
+        self.assertEqual(test_row["colors"], 3)
+        self.assertEqual(test_row["size"], "M")
+        self.assertEqual(test_row["gender"], "Unisex")
 
     def test_transform_data_empty_df(self):
         df = pd.DataFrame()

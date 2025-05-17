@@ -46,8 +46,8 @@ def main():
         logger.info("Starting data loading to all destinations...")
         
         # Hardcoded configuration parameters
-        csv_path = './data'
-        csv_filename = f"products_{datetime.now().strftime('%Y%m%d')}.csv"
+        csv_path = './'
+        csv_filename = f"products.csv"
         
         sheets_credentials_path = 'google-sheets-api.json'
         sheets_id = '173byRKN5zsxFwCp3-tL0W4A4t9fYqjIx0CYdVjEJirk'

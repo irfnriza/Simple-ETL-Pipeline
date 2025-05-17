@@ -137,7 +137,6 @@ def extract_data():
         logger.warning("No products were extracted!")
     else:
         logger.info(f"Successfully extracted {len(df)} products")
-        df.to_csv('nama_file.csv', index=False)
 
     return df
 
