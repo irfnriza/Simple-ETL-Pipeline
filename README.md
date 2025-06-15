@@ -1,7 +1,3 @@
-Tentu, saya akan membuatkan file README.md yang komprehensif untuk repositori Anda berdasarkan file-file yang telah disediakan.
-
------
-
 # Proyek ETL Sederhana untuk Data Produk Fashion
 
 Repositori ini berisi sebuah proyek pipeline ETL (Extract, Transform, Load) sederhana yang dibangun dengan Python. Pipeline ini dirancang untuk mengekstrak data produk fashion dari sebuah situs web, membersihkan dan mentransformasikannya, lalu memuatnya ke berbagai tujuan data seperti CSV, Google Sheets, dan database PostgreSQL.
